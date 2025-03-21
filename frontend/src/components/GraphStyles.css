@@ -1,0 +1,44 @@
+
+/* Style the SVG container */
+svg {
+    border: 1px solid #ccc; /* Optional: Adds a border around the SVG container */
+    background-color: #f4f4f4; /* Light background color */
+    border-radius: 10px; /* Rounded corners */
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin: 0 auto; /* Centers the SVG within its parent container */
+}
+
+/* Style for the links (lines between nodes) */
+line {
+    stroke: #3498db; /* Blue color for links */
+    stroke-width: 2px;
+}
+
+/* Style for nodes (circles representing each step) */
+circle {
+    fill: #2ecc71; /* Green color for nodes */
+    stroke: #fff; /* White stroke for the circles */
+    stroke-width: 2px;
+}
+
+/* Style for the text labels on nodes */
+text {
+    font-family: Arial, sans-serif; /* Set font for text */
+    font-size: 14px; /* Set text size */
+    text-anchor: middle; /* Centers the text inside the nodes */
+    pointer-events: none; /* Prevents text from being interacted with during dragging */
+}
+
+/* Optional: Add hover effect on nodes */
+circle:hover {
+    fill: #1abc9c; /* Darker green on hover */
+    cursor: pointer; /* Change cursor on hover */
+}
+
+/* Optional: Add hover effect on links */
+line:hover {
+    stroke: #e74c3c; /* Red color for links when hovered */
+    stroke-width: 3px; /* Increase stroke width on hover */
+}

@@ -1,0 +1,106 @@
+/* Applying the Lemon font */
+@import url('https://fonts.googleapis.com/css2?family=Lemon&display=swap');
+
+/* Global styling */
+body {
+  font-family: 'lemon', cursive;
+}
+
+/* Title Styling */
+.title {
+    font-size: 50px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Card Styling */
+.learning-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 15px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.learning-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Progress Circle Styling */
+.progress-circle {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-top: 10px;
+}
+
+.progress-bg {
+  fill: none;
+  stroke: #e6e6e6;
+  stroke-width: 8;
+}
+
+.progress-bar {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.3s ease;
+}
+
+.progress-text {
+  font-size: 18px;
+  fill: #333;
+  font-weight: bold;
+  dominant-baseline: middle;
+}
+
+/* Dynamic Progress Ring Color */
+.card .progress-bar {
+  transition: stroke 0.3s ease;
+}
+
+/* Customizing Ring Color based on Progress */
+.card .progress-bar.red {
+  stroke: red;
+}
+
+.card .progress-bar.yellow {
+  stroke: yellow;
+}
+
+.card .progress-bar.lightgreen {
+  stroke: lightgreen;
+}
+
+.card .progress-bar.green {
+  stroke: green;
+}
+
+
+/* Start Button Styling */
+.start-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: linear-gradient(to right, #00c6ff, #0072ff); /* Gradient from left to right */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 3.5s ease; /* Smooth transition */
+  }
+  
+  .start-button:hover {
+    background: linear-gradient(to right, #32cd32, #228b22); /* Green gradient on hover */
+  }
+  
+
+.delete-button{
+  background: none;
+  border: none;
+}
+  
