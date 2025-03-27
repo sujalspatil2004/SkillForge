@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lemon&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Lemon&display=swap'); */
 
 /* Contact Us Component Styling */
 .contact-us {
@@ -13,9 +13,9 @@
 
 /* Form Customization */
 .contact-us .form-control {
-  font-family: 'Lemon', cursive;
+  /* font-family: 'Lemon', cursive; */
   padding: 15px;  /* Increased padding for better readability */
-  font-size: 1.2rem; /* Larger font size */
+  font-size: 1.5rem; /* Larger font size */
 }
 
 /* Textarea Styling */

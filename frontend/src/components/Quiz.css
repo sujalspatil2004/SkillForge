@@ -64,7 +64,7 @@
   }
   
   .quiz-question {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     color: #34495e;
     line-height: 1.5;
   }
@@ -74,17 +74,17 @@
     border-radius: 8px;
     transition: all 0.3s ease;
     text-align: left;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
   }
   
   .quiz-option:hover {
-    background-color: #e8f4fd;
+    background-color: #041c2e;
     transform: translateY(-2px);
   }
   
   .quiz-option.active {
     background-color: #3498db;
-    color: white;
+    color: rgb(170, 131, 131);
   }
   
   .quiz-next-button {
@@ -109,11 +109,11 @@
     }
     
     .quiz-question {
-      font-size: 1.1rem;
+      font-size: 1.3rem;
     }
     
     .quiz-option {
       padding: 10px 12px;
-      font-size: 1rem;
+      font-size: 1.3rem;
     }
   }

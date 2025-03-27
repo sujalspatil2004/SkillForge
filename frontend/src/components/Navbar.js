@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { User } from "lucide-react"; // User icon
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css"; // Ensure this CSS file contains styles for dropdown
+import logo from "../assets/logo.jpg";
+
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -25,13 +27,8 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       {/* Web Logo */}
       <a className="navbar-brand m-3" href="#">
-        <img
-          src="path-to-your-logo.png" // Replace with your actual logo path
-          alt="Web Logo"
-          width="30"
-          height="30"
-          className="d-inline-block align-top"
-        />
+      <img  src={logo} alt="Web Logo" width="30" height="30" className="d-inline-block align-top h-100 w-100" />
+
       </a>
 
       {/* Navbar Toggler for Mobile */}

@@ -114,7 +114,7 @@
   
   .progress-bar {
     height: 30px;
-    font-size: 16px;
+    font-size: 7px;
     text-align: center;
   }
   
@@ -128,11 +128,13 @@
     border: 1px solid #ddd;
     padding: 10px;
     text-align: left;
+    font-size: 1.3rem;
   }
   
   .pathway-table th {
     background-color: #4caf50;
     color: white;
+    font-size: 1.5rem;
   }
   
   button {
@@ -144,7 +146,7 @@
   }
   
   button:hover {
-    background-color: #005f73;
+    background-color: #0a424e;
   }
    
 

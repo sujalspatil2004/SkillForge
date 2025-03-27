@@ -195,202 +195,6 @@
 // export default CoursePathway;
 
 
-
-
-
-// import React, { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
-// import axios from "axios";
-// import ReactMarkdown from "react-markdown";
-// import { ProgressBar, Modal, Button, Form } from "react-bootstrap";
-// import "./CoursePathway.css";
-// import { useNavigate } from "react-router-dom"; // Add at the top
-
-
-// const CoursePathway = () => {
-//   const { id } = useParams();
-//   const [course, setCourse] = useState(null);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState("");
-//   const [progress, setProgress] = useState(0);
-//   const [completedSteps, setCompletedSteps] = useState(new Set());
-//   const [showQuiz, setShowQuiz] = useState(false);
-//   const [currentQuestion, setCurrentQuestion] = useState(null);
-//   const [selectedAnswer, setSelectedAnswer] = useState("");
-//   const navigate = useNavigate(); // Inside the component
-
-//   useEffect(() => {
-//     const fetchCourse = async () => {
-//       setLoading(true);
-//       setError("");
-//       setCourse(null);
-//       setProgress(0);
-//       setCompletedSteps(new Set());
-
-//       try {
-//         const token = localStorage.getItem("token");
-//         if (!token) {
-//           setError("You are not authenticated. Please log in.");
-//           setLoading(false);
-//           return;
-//         }
-
-//         const response = await axios.get(`http://localhost:5000/api/courses/${id}`, {
-//           headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${token}`,
-//           },
-//           withCredentials: true,
-//         });
-
-//         let fetchedCourse = response.data;
-//         if (Array.isArray(fetchedCourse) && fetchedCourse.length > 0) {
-//           fetchedCourse = fetchedCourse[0];
-//         }
-
-//         setCourse(fetchedCourse);
-//         setProgress(fetchedCourse.progress || 0);
-//       } catch (error) {
-//         setError(error.response?.data?.message || "Failed to fetch course.");
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchCourse();
-//   }, [id]);
-
-//   const handleStepClick = async (sectionIndex, stepIndex) => {
-//     if (!course) return;
-    
-//     try {
-//       const stepId = `${sectionIndex}-${stepIndex}`;
-//       const newCompletedSteps = new Set(completedSteps);
-      
-//       // Toggle completion status
-//       newCompletedSteps.has(stepId) 
-//         ? newCompletedSteps.delete(stepId) 
-//         : newCompletedSteps.add(stepId);
-      
-//       // Calculate new progress
-//       const totalSteps = course.pathway.reduce(
-//         (acc, section) => acc + section.children.length, 
-//         0
-//       );
-//       const newProgress = Math.round((newCompletedSteps.size / totalSteps) * 100);
-      
-//       // Optimistic UI updates
-//       setCompletedSteps(newCompletedSteps);
-//       setProgress(newProgress);
-      
-//       // Persist to backend
-//       const token = localStorage.getItem("token");
-//       await axios.put(
-//         `http://localhost:5000/api/courses/${id}/progress`,
-//         { 
-//           progress: newProgress,
-//           completedSteps: Array.from(newCompletedSteps) // Include completed steps
-//         },
-//         { 
-//           headers: { 
-//             "Content-Type": "application/json", 
-//             Authorization: `Bearer ${token}` 
-//           },
-//           withCredentials: true
-//         }
-//       );
-//     } catch (error) {
-//       console.error("Progress update failed:", error);
-//       setError("Failed to save progress. Please try again.");
-//       // Consider reverting optimistic updates here
-//     }
-//   };
-
-//   const handleQuizClick = (child, sectionIndex, stepIndex) => {
-//     navigate("/quiz", {
-//       state: {
-//         topic: child.name, // Pass topic name as topic for quiz generation
-//         quizData: child.quiz || null, // If quiz data exists, pass it
-//         courseId: id, 
-//         sectionIndex,
-//         stepIndex,
-//       },
-//     });
-//   };
-
-//   const handleSubmitQuiz = () => {
-//     setShowQuiz(false);
-//   };
-
-//   if (loading) return <p>Loading...</p>;
-//   if (error) return <p className="error">{error}</p>;
-//   if (!course) return <p>No course found.</p>;
-
-//   let stepNumber = 1;
-
-//   return (
-//     <div className="course-container">
-//       <h2>{course.technology} Learning Pathway</h2>
-//       <ProgressBar now={progress} label={`${progress}%`} />
-//       <table className="pathway-table">
-//         <thead>
-//           <tr>
-//             <th>Sr.No.</th>
-//             <th>Description</th>
-//             <th>Status</th>
-//             <th>Quiz</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {course.pathway.map((section, sectionIndex) =>
-//             section.children.map((child, stepIndex) => {
-//               const stepId = `${sectionIndex}-${stepIndex}`;
-//               return (
-//                 <tr key={stepId}>
-//                   <td>{stepNumber++}</td>
-//                   <td>{child.name}</td>
-//                   <td>
-//   <input 
-//     type="checkbox" 
-//     id={`step-${stepId}`}
-//     checked={completedSteps.has(stepId)} 
-//     onChange={() => handleStepClick(sectionIndex, stepIndex)} 
-//   />
-//   <label htmlFor={`step-${stepId}`}></label>
-// </td>
-//                   <td>
-//                   <button onClick={() => handleQuizClick(child, sectionIndex, stepIndex)}>Quiz</button>
-//                   </td>
-//                 </tr>
-//               );
-//             })
-//           )}
-//         </tbody>
-//       </table>
-
-//       <Modal show={showQuiz} onHide={() => setShowQuiz(false)}>
-//         <Modal.Header closeButton>
-//           <Modal.Title>Quiz Question</Modal.Title>
-//         </Modal.Header>
-//         <Modal.Body>
-//           <p>{currentQuestion?.question}</p>
-//           <Form>
-//             {currentQuestion?.options.map((option, index) => (
-//               <Form.Check key={index} type="radio" label={option} name="quizOption" onChange={() => setSelectedAnswer(option)} />
-//             ))}
-//           </Form>
-//         </Modal.Body>
-//         <Modal.Footer>
-//           <Button variant="secondary" onClick={() => setShowQuiz(false)}>Close</Button>
-//           <Button variant="primary" onClick={handleSubmitQuiz}>Submit</Button>
-//         </Modal.Footer>
-//       </Modal>
-//     </div>
-//   );
-// };
-
-// export default CoursePathway;
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -441,6 +245,30 @@ const CoursePathway = () => {
 
         setCourse(fetchedCourse);
         setProgress(fetchedCourse.progress || 0);
+
+        // Calculate completed steps based on progress percentage
+        if (fetchedCourse.pathway) {
+          const totalSteps = fetchedCourse.pathway.reduce(
+            (acc, section) => acc + section.children.length,
+            0
+          );
+          const completedCount = Math.round((fetchedCourse.progress / 100) * totalSteps);
+          
+          const newCompletedSteps = new Set();
+          let stepsProcessed = 0;
+          
+          // Mark steps as completed until we reach the completedCount
+          fetchedCourse.pathway.forEach((section, sectionIndex) => {
+            section.children.forEach((_, stepIndex) => {
+              if (stepsProcessed < completedCount) {
+                newCompletedSteps.add(`${sectionIndex}-${stepIndex}`);
+                stepsProcessed++;
+              }
+            });
+          });
+
+          setCompletedSteps(newCompletedSteps);
+        }
       } catch (error) {
         setError(error.response?.data?.message || "Failed to fetch course.");
       } finally {
@@ -458,19 +286,25 @@ const CoursePathway = () => {
       const stepId = `${sectionIndex}-${stepIndex}`;
       const newCompletedSteps = new Set(completedSteps);
 
-      newCompletedSteps.has(stepId)
-        ? newCompletedSteps.delete(stepId)
-        : newCompletedSteps.add(stepId);
+      // Toggle completion status
+      if (newCompletedSteps.has(stepId)) {
+        newCompletedSteps.delete(stepId);
+      } else {
+        newCompletedSteps.add(stepId);
+      }
 
+      // Calculate new progress
       const totalSteps = course.pathway.reduce(
         (acc, section) => acc + section.children.length,
         0
       );
       const newProgress = Math.round((newCompletedSteps.size / totalSteps) * 100);
 
+      // Update state
       setCompletedSteps(newCompletedSteps);
       setProgress(newProgress);
 
+      // Update backend
       const token = localStorage.getItem("token");
       await axios.put(
         `http://localhost:5000/api/courses/${id}/progress`,
@@ -496,7 +330,7 @@ const CoursePathway = () => {
     navigate("/quiz", {
       state: {
         topic: child.name,
-        quizData: child.quiz || [], // Ensure quizData is always an array (prevents undefined errors)
+        quizData: child.quiz || [],
         courseId: id,
         sectionIndex,
         stepIndex,
@@ -527,6 +361,8 @@ const CoursePathway = () => {
           {course.pathway.map((section, sectionIndex) =>
             section.children.map((child, stepIndex) => {
               const stepId = `${sectionIndex}-${stepIndex}`;
+              const isCompleted = completedSteps.has(stepId);
+              
               return (
                 <tr key={stepId}>
                   <td>{stepNumber++}</td>
@@ -535,7 +371,7 @@ const CoursePathway = () => {
                     <input
                       type="checkbox"
                       id={`step-${stepId}`}
-                      checked={completedSteps.has(stepId)}
+                      checked={isCompleted}
                       onChange={() => handleStepClick(sectionIndex, stepIndex)}
                     />
                     <label htmlFor={`step-${stepId}`}></label>
