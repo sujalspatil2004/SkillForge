@@ -17,7 +17,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setDropdownOpen(false);
-    navigate("/login");
+    navigate("/");
     window.location.reload();
   };
 
@@ -54,7 +54,7 @@ const Navbar = () => {
             <a className="nav-link" href="/dashboard">Dashboard</a>
           </li>
           <li className={`nav-item m-3 ${location.pathname === "/" ? "active" : ""}`}>
-            <a className="nav-link" href="/">Explore Tech</a>
+            <a className="nav-link" href="/explore">Explore Tech</a>
           </li>
           <li className={`nav-item m-3 ${location.pathname === "/about" ? "active" : ""}`}>
             <a className="nav-link" href="/about">About Us</a>

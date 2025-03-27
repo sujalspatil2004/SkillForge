@@ -13,7 +13,7 @@ router.post("/generate", async (req, res) => {
 
   try {
     console.log("Received technology:", technology);
-    const prompt = `Generate a short and concise learning pathway for mastering ${technology}. Each stage should have a title, a brief description (1-2 sentences), and 1-2 key resources or topics.`;
+    const prompt = `Generate a short and concise learning pathway for mastering ${technology}. Each stage should have a title, a brief description (1-2 sentences), and 1-2 key resources or topics. Ensure the response is in plain text format without any special characters like *, #, or markdown symbols.`;
 
     const payload = {
       contents: [

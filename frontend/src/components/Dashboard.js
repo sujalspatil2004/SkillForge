@@ -137,58 +137,52 @@ const Dashboard = () => {
 
 export default Dashboard;
 
-
-
-
-
-
-
-
 // import React, { useEffect, useState } from "react";
 // import axios from "axios";
 // import "bootstrap/dist/css/bootstrap.min.css";
-// import { useNavigate } from "react-router-dom"; // Import useNavigate
-// import "./Dashboard.css"; // Custom CSS for additional styling
+// import { useNavigate } from "react-router-dom";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faTrash } from "@fortawesome/free-solid-svg-icons";
+// import "./Dashboard.css";
 
 // const Dashboard = () => {
-//   const [courses, setCourses] = useState([]); // Initialize with empty array
-//   const [loading, setLoading] = useState(true); // Add loading state
-//   const [error, setError] = useState(""); // Add error state
+//   const [courses, setCourses] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState("");
 
-//   const navigate = useNavigate(); // Initialize useNavigate hook
+//   const navigate = useNavigate();
 
 //   useEffect(() => {
 //     const fetchCourses = async () => {
 //       try {
-//         const token = localStorage.getItem("token"); // Get token from localStorage
+//         const token = localStorage.getItem("token");
 
 //         if (!token) {
-//           console.error("No token found in localStorage");
 //           setError("You are not authenticated. Please log in.");
 //           setLoading(false);
-//           return; // Exit if no token is found
+//           navigate("/login");
+//           return;
 //         }
 
-//         const response = await axios.get("http://localhost:5000/api/courses/", {
+//         const response = await axios.get("http://localhost:5000/api/courses", {
 //           headers: {
 //             "Content-Type": "application/json",
-//             Authorization: `Bearer ${token}`, // Pass token dynamically
+//             Authorization: `Bearer ${token}`,
 //           },
 //         });
 
-//         setCourses(response.data); // Set courses from the response
-//         setLoading(false); // Set loading to false after data is fetched
+//         setCourses(response.data);
 //       } catch (error) {
 //         console.error("Error fetching courses:", error);
 //         setError("Failed to fetch courses. Please try again later.");
-//         setLoading(false); // Set loading to false in case of error
+//       } finally {
+//         setLoading(false);
 //       }
 //     };
 
 //     fetchCourses();
-//   }, []); // Empty dependency array ensures this runs only once when the component mounts
+//   }, [navigate]);
 
-//   // Function to determine ring color class based on progress
 //   const getRingColorClass = (progress) => {
 //     if (progress <= 20) return "red";
 //     if (progress <= 40) return "yellow";
@@ -196,73 +190,95 @@ export default Dashboard;
 //     return "green";
 //   };
 
-//   // Function to generate a random color
 //   const getRandomColor = () => {
-//     const colors = ["#7b1a98", "#6638a8", "#3f46ac", "#3581ad", "#35ad9d", "#2ca569", "#49a52c", "#84a52c", "#b69428"];
+//     const colors = [
+//       "#7b1a98", "#6638a8", "#3f46ac", 
+//       "#3581ad", "#35ad9d", "#2ca569",
+//       "#49a52c", "#84a52c", "#b69428"
+//     ];
 //     return colors[Math.floor(Math.random() * colors.length)];
 //   };
 
+//   const handleDelete = async (courseId) => {
+//     if (window.confirm("⚠️ Are you sure you want to delete this course? This action cannot be undone!")) {
+//       try {
+//         await axios.delete(`http://localhost:5000/api/courses/${courseId}`, {
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${localStorage.getItem("token")}`,
+//           },
+//         });
+
+//         setCourses(prevCourses => prevCourses.filter(course => course._id !== courseId));
+//       } catch (error) {
+//         alert("❌ Failed to delete the course. Please try again later.");
+//       }
+//     }
+//   };
+
 //   if (loading) {
-//     return <div className="text-center mt-4">Loading...</div>; // Show loading message
+//     return (
+//       <div className="dashboard-loading">
+//         <div className="spinner-border text-primary" role="status">
+//           <span className="visually-hidden">Loading...</span>
+//         </div>
+//       </div>
+//     );
 //   }
 
 //   if (error) {
-//     return <div className="text-center mt-4 text-danger">{error}</div>; // Show error message
+//     return <div className="dashboard-error">{error}</div>;
 //   }
 
 //   return (
-//     <div className="container mt-4">
-//       <h2 className="text-left mb-4 title">My <br /> Learnings</h2>
-//       <div className="row">
-//         {courses.map((course, index) => (
-//           <div key={index} className="col-md-3 mx-3 mb-4">
-//             <div
-//               className="card learning-card text-center p-4"
-//               style={{ backgroundColor: getRandomColor() }} // Apply random background color
-//             >
-//               <h5 className="card-title text-white h2 text-right">{course.technology}</h5> {/* Align text to the right */}
-//               <div className="progress-circle">
-//                 <svg
-//                   width="100"
-//                   height="100"
-//                   viewBox="0 0 100 100"
-//                   className="progress-ring"
+//     <div className="dashboard-container">
+//       <h2 className="dashboard-title">My Learnings</h2>
+      
+//       {courses.length === 0 ? (
+//         <div className="no-courses">
+//           <p>You don't have any courses yet. Create your first course to get started!</p>
+//         </div>
+//       ) : (
+//         <div className="courses-grid">
+//           {courses.map((course, index) => (
+//             <div key={index} className="course-card" style={{ backgroundColor: getRandomColor() }}>
+//               <div className="course-header">
+//                 <h3 className="course-title">{course.technology}</h3>
+//                 <button 
+//                   className="delete-btn"
+//                   onClick={() => handleDelete(course._id)}
 //                 >
+//                   <FontAwesomeIcon icon={faTrash} />
+//                 </button>
+//               </div>
+              
+//               <div className="progress-circle">
+//                 <svg width="100" height="100" viewBox="0 0 100 100">
 //                   <circle className="progress-bg" cx="50" cy="50" r="40" />
 //                   <circle
-//                     className={`progress-bar ${getRingColorClass(course.progress)}`} // Apply the color class dynamically
+//                     className={`progress-bar ${getRingColorClass(course.progress)}`}
 //                     cx="50"
 //                     cy="50"
 //                     r="40"
 //                     strokeDasharray="251.2"
-//                     strokeDashoffset={`${
-//                       251.2 - (251.2 * course.progress) / 100
-//                     }`}
-//                     strokeWidth="8" // Add stroke width
-//                     strokeLinecap="round" // Add stroke linecap
+//                     strokeDashoffset={251.2 - (251.2 * course.progress) / 100}
 //                   />
-//                   <text
-//                     x="50"
-//                     y="50"
-//                     textAnchor="middle"
-//                     className="progress-text"
-//                     dy="0.3em"
-//                   >
+//                   <text x="50" y="50" textAnchor="middle" dy=".3em">
 //                     {course.progress}%
 //                   </text>
 //                 </svg>
 //               </div>
-//               {/* Start Button */}
-//               <button
-//                 className="start-button"
-//                 onClick={() => navigate(`/courses/${course._id}`)} // Navigate to pathway using course ID
+              
+//               <button 
+//                 className="start-btn"
+//                 onClick={() => navigate(`/courses/${course._id}`)}
 //               >
-//                 Start
+//                 Start Learning
 //               </button>
 //             </div>
-//           </div>
-//         ))}
-//       </div>
+//           ))}
+//         </div>
+//       )}
 //     </div>
 //   );
 // };

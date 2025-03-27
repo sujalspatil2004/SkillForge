@@ -252,11 +252,11 @@ const App = () => {
       {isAuthenticated && <Navbar />}
       <Routes>
         <Route
-          path="/"
+          path="/explore"
           element={<Home technology={technology} setTechnology={setTechnology} handleGenerate={handleGenerate} pathway={pathway} error={error} />}
         />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/courses/:id" element={<CoursePathway/>} ></Route>
         <Route path="/contact"element={<ContactUS/>}></Route>

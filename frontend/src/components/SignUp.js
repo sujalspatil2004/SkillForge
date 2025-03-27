@@ -314,7 +314,7 @@ const SignUp = () => {
             </form>
 
             <p className="login-link">
-              Already part of the crew? <Link to="/login">Login here and join the fun!</Link>
+              Already part of the crew? <Link to="/">Login here and join the fun!</Link>
             </p>
           </div>
         </div>
