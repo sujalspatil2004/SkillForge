@@ -87,7 +87,7 @@ const Dashboard = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="text-left mb-4 title">My <br /> Learnings</h2>
+      <h2 className="text-left mb-4 title">My Learnings:</h2>
       <div className="row">
         {courses.map((course, index) => (
           <div key={index} className="col-md-3 mx-3 mb-4">

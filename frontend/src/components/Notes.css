@@ -1,0 +1,87 @@
+/* Notes.css */
+.notes-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.notes-container h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.notes-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e1e4e8;
+}
+
+.notes-content p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.notes-content pre {
+    background-color: #f6f8fa;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.notes-content code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+}
+
+.notes-content h3 {
+    margin-top: 1.5rem;
+    color: #2c3e50;
+}
+
+.notes-content ul,
+.notes-content ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.back-button {
+    display: block;
+    width: 150px;
+    margin: 0 auto;
+    padding: 0.75rem 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    background-color: #2980b9;
+}
+
+.error {
+    color: #e74c3c;
+    font-weight: bold;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin: 2rem 0;
+}

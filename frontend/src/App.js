@@ -112,7 +112,7 @@ import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import CoursePathway from "./components/CoursePathway";
-
+import Notes from './components/Notes';
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -252,15 +252,16 @@ const App = () => {
       {isAuthenticated && <Navbar />}
       <Routes>
         <Route
-          path="/explore"
+          path="/"
           element={<Home technology={technology} setTechnology={setTechnology} handleGenerate={handleGenerate} pathway={pathway} error={error} />}
         />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/courses/:id" element={<CoursePathway/>} ></Route>
         <Route path="/contact"element={<ContactUS/>}></Route>
         <Route path="/quiz" element={<Quiz/>}></Route>
+        <Route path="/notes" element={<Notes/>}></Route>
         
       </Routes>
     </Router>

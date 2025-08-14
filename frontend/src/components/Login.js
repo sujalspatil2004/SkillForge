@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Lottie from "lottie-react";
-import loginAnimation from "../assets/login-animation.json"; // Ensure the JSON animation is present
+import loginAnimation from "../assets/login-animation.json";
 import "./Login.css";
-
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -15,138 +14,122 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [bgPosition, setBgPosition] = useState({ x: 50, y: 50 });
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
-  
+    setSuccess("");
+
     try {
       const response = await axios.post("http://localhost:5000/api/login", formData);
       const token = response.data.token;
-  
-      // Store the token in localStorage (or sessionStorage based on your preference)
+
       localStorage.setItem("token", token);
-  
-      setLoading(false);
-      setSuccess("🎉 Welcome back! You are successfully logged in. 🎉");
-      setFormData({ email: "", password: "" });
-      console.log("Token is ", token)
-      // Redirect to home or dashboard
-      navigate("/dashboard");
-      window.location.reload();
+      setSuccess("Login successful! Redirecting...");
+      
+      // Small delay to show success message before redirect
+      setTimeout(() => {
+        navigate("/dashboard");
+        window.location.reload();
+      }, 1500);
+      
     } catch (err) {
       setLoading(false);
-      setError("😱 Oops! Something went wrong. Try again, maybe? 😱");
-      console.error(err);
+      setError(err.response?.data?.message || "Login failed. Please try again.");
+      console.error("Login error:", err);
     }
   };
-  
-
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   setError("");
-
-  //   axios
-  //     .post("http://localhost:5000/api/login", formData)
-  //     .then(() => {
-  //       setLoading(false);
-  //       setSuccess("🎉 Welcome back! You are successfully logged in. 🎉");
-  //       setFormData({ email: "", password: "" });
-  //       navigate("/"); 
- 
-  //     })
-  //     .catch((err) => {
-  //       setLoading(false);
-  //       setError("😱 Oops! Something went wrong. Try again, maybe? 😱");
-  //       console.error(err);
-  //     });
-  // };
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-
-      // Dynamically shift background gradient based on mouse movement
-      setBgPosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
-      });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
 
   return (
-    <div
-      className="login-container"
-      style={{
-        background: `radial-gradient(circle at ${bgPosition.x}% ${bgPosition.y}%,rgb(0, 255, 255), #8000ff, #00ffff)`,
-      }}
-    >
-      {/* Glowing Mouse Tracker */}
-      <div
-        className="mouse-tracker"
-        style={{
-          left: mousePosition.x - 150,
-          top: mousePosition.y - 150,
-        }}
-      ></div>
-
-      <div className="content-wrapper">
-        {/* Animation Section */}
-
-        {/* <div className="animation-container">
-          <Lottie animationData={loginAnimation} loop className="login-animation" />
-        </div> */}
+    <div className="login-container">
+      <div className="login-content">
+        {/* Animation Section - Optional, can be removed if not needed */}
+        <div className="login-animation-container">
+          <Lottie 
+            animationData={loginAnimation} 
+            loop 
+            className="login-animation" 
+          />
+        </div>
 
         {/* Form Section */}
-        <div className="form-container">
+        <div className="login-form-container">
           <div className="login-card">
-            <h2 className="login-title">Login</h2>
+            <div className="login-header">
+              <h2>Welcome Back</h2>
+              <p>Please enter your credentials to login</p>
+            </div>
 
-            {success && <div className="alert alert-success">{success}</div>}
-            {error && <div className="alert alert-danger">{error}</div>}
+            {success && (
+              <div className="alert alert-success">
+                {success}
+              </div>
+            )}
+            {error && (
+              <div className="alert alert-error">
+                {error}
+              </div>
+            )}
 
-            <form onSubmit={handleSubmit}>
-              <div className="input-group">
-                <label>Email</label>
+            <form onSubmit={handleSubmit} className="login-form">
+              <div className="form-group">
+                <label htmlFor="email">Email Address</label>
                 <input
                   type="email"
+                  id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  placeholder="Enter your email"
                   required
                 />
               </div>
-              <div className="input-group">
-                <label>Password</label>
+
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
                 <input
                   type="password"
+                  id="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
+                  placeholder="Enter your password"
                   required
                 />
               </div>
 
-              <button type="submit" className="login-btn" disabled={loading}>
-                {loading ? "Logging in..." : "Let's Rock 'n Roll! 🚀"}
-              </button>
-            </form>
+              <div className="form-actions">
+                <button 
+                  type="submit" 
+                  className="login-button" 
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <span className="button-loader"></span>
+                  ) : (
+                    "Sign In"
+                  )}
+                </button>
+              </div>
 
-            <p className="signup-link">
-              New here? <Link to="/signup">Sign up here and join the fun!</Link>
-            </p>
+              <div className="login-footer">
+                <p>
+                  Don't have an account?{" "}
+                  <Link to="/signup" className="signup-link">
+                    Sign up here
+                  </Link>
+                </p>
+                <Link to="/forgot-password" className="forgot-password">
+                  Forgot password?
+                </Link>
+              </div>
+            </form>
           </div>
         </div>
       </div>

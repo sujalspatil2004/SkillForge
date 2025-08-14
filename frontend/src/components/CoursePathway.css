@@ -1,221 +1,111 @@
-/* 
-   .course-container {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-  }
-  
-  .progress-container {
-    margin-bottom: 20px;
-  }
-  
-  .progress-bar {
-    height: 40px; 
-    font-size: 18px; 
-    text-align: center;
-  }
-  
-  .pathway-section {
-    margin-top: 20px;
-    padding: 15px;
-  }
-  
-  .steps-container {
-    display: flex;
-    flex-direction: column;
-    gap: 45px; 
-    position: relative;
-    align-items: center; 
-  }
-  
-  .step {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    font-size: 20px;
-    cursor: pointer;
-    position: relative;
-    transition: background 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
+.course-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
 
-  .step.left {
-    align-self: flex-start;
-  }
-  
-  .step.right {
-    align-self: flex-end;
-  }
-  
-  .step.left,
-  .step.right {
-    margin: 0 180px; 
-  }
-  
-  
+.progress-bar {
+  height: 30px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.pathway-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.pathway-table th, .pathway-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.pathway-table th {
+  background-color: #4caf50;
+  color: white;
+}
+
+button {
+  background-color: #008cba;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005f73;
+}
  
-  .step.left::after {
-    left: 100%;
-    top: 50%;
-    transform: translateY(-50%) rotate(15deg);
-  }
-  
-
-  .step.right::after {
-    right: 100%;
-    top: 50%;
-    transform: translateY(-50%) rotate(-15deg);
-  }
-  
-
-  .step:last-child::after {
-    display: none;
-  }
-  
-  .step.locked {
-    background: #ccc;
-    color: #888;
-  }
-  
-  .step.completed {
-    background: #4caf50;
-    color: white;
-  }
-  
-  .step:hover {
-    transform: scale(1.1);
-  }
-  
-  .tooltip {
-    position: absolute;
-    bottom: 70px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    padding: 8px;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    width: 200px;
-    z-index: 10;
-  }
-   */
-
-    .course-container {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-  }
-  
-  .progress-bar {
-    height: 30px;
-    font-size: 7px;
-    text-align: center;
-  }
-  
-  .pathway-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .pathway-table th, .pathway-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-    font-size: 1.3rem;
-  }
-  
-  .pathway-table th {
-    background-color: #4caf50;
-    color: white;
-    font-size: 1.5rem;
-  }
-  
-  button {
-    background-color: #008cba;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0a424e;
-  }
-   
 
 /* Add this to your CoursePathway.css */
 
 /* Hide the default checkbox */
 input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
+position: absolute;
+opacity: 0;
+width: 0;
+height: 0;
 }
 
 /* Create custom checkbox */
 input[type="checkbox"] + label {
-  position: relative;
-  cursor: pointer;
-  padding-left: 30px;
-  display: inline-block;
+position: relative;
+cursor: pointer;
+padding-left: 30px;
+display: inline-block;
 }
 
 /* Checkbox box */
 input[type="checkbox"] + label:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #3f51b5;
-  border-radius: 4px;
-  background: white;
+content: "";
+position: absolute;
+left: 0;
+top: 0;
+width: 20px;
+height: 20px;
+border: 2px solid #3f51b5;
+border-radius: 4px;
+background: white;
 }
 
 /* Checkmark (hidden by default) */
 input[type="checkbox"] + label:after {
-  content: "";
-  position: absolute;
-  left: 7px;
-  top: 3px;
-  width: 6px;
-  height: 12px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  opacity: 0;
+content: "";
+position: absolute;
+left: 7px;
+top: 3px;
+width: 6px;
+height: 12px;
+border: solid white;
+border-width: 0 2px 2px 0;
+transform: rotate(45deg);
+opacity: 0;
 }
 
 /* Show checkmark when checked */
 input[type="checkbox"]:checked + label:before {
-  background: #3f51b5;
+background: #3f51b5;
 }
 
 input[type="checkbox"]:checked + label:after {
-  opacity: 1;
+opacity: 1;
 }
 
 /* Focus style */
 input[type="checkbox"]:focus + label:before {
-  box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
 }
 
 /* Disabled style */
 input[type="checkbox"]:disabled + label {
-  color: #b8b8b8;
-  cursor: auto;
+color: #b8b8b8;
+cursor: auto;
 }
 
 input[type="checkbox"]:disabled + label:before {
-  box-shadow: none;
-  background: #ddd;
+box-shadow: none;
+background: #ddd;
 }
